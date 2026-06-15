@@ -5,9 +5,17 @@ class Jogador:
     def __init__ (self):
         self.pos_x = 430
         self.pos_y = 861
+      
         self.lista_sprite = [pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprints-spongeboob.png")),2.5),
-                             pygame.transform.scale_by(pygame.image.load(resource_path("")),2.5),
-                             pygame.transform.scale_by(pygame.image.load(resource_path("")),2.5),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite1.png")),2.5),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite2.png")),2.5),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite3.png")),2.5),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite4.png")),2.5),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite5.png")),2.5),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite6.png")),2.5),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite7.png")),2.5),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite8.png")),2.5),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite9.png")),2.5)
                             
                              ]
         self.contador = 0
@@ -16,7 +24,7 @@ class Jogador:
         self.imagem = self.sprite
 
     def andar (self,tecla_pressionada):
-        movendo = tecla_pressionada[pygame.K_RIGHT] or tecla_pressionada[pygame.K_LEFT]
+        movendo = tecla_pressionada[pygame.K_RIGHT] or tecla_pressionada[pygame.K_LEFT] or tecla_pressionada[pygame.K_d] or tecla_pressionada[pygame.K_a]
         if movendo:
             self.contador += 1
             if self.contador == len(self.lista_sprite):

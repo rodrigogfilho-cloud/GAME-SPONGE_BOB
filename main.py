@@ -108,9 +108,10 @@ while rodando :
             for inimigo in inimigos:
                 inimigo.pos_y = -2500
             
+            
 
         if contador_poder == 0:
-            print("oi")
+            print("SEU PODER NAO FUNCIONA")
 
                 
 
@@ -123,7 +124,7 @@ while rodando :
     if status_jogo == "PERDEU":
 
         tela.blit(derrota,(0,0))
-        if tecla_pressionada[pygame.K_RETURN]:
+        if tecla_pressionada[pygame.K_SPACE]:
 
             for inimigo in inimigos:
                 inimigo.voltar()
@@ -152,4 +153,4 @@ while rodando :
 
     pygame.display.update()
 
-    clock.tick(60)
+    clock.tick(30)
