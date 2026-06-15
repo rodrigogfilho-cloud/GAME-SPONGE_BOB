@@ -11,11 +11,11 @@ class Jogador:
                              pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite2.png")),2.5),
                              pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite3.png")),2.5),
                              pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite4.png")),2.5),
-                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite5.png")),2.5),
-                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite6.png")),2.5),
-                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite7.png")),2.5),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite5.png")),2.4),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite6.png")),2.4),
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite7.png")),2.4),
                              pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite8.png")),2.5),
-                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite9.png")),2.5)
+                             pygame.transform.scale_by(pygame.image.load(resource_path("src/img/sprite9.png")),2.4)
                             
                              ]
         self.contador = 0
