@@ -25,3 +25,7 @@ class Ruim:
     def voltar (self):
         self.pos_y = -200
         self.pos_x = random.randint(100,600)
+        
+    
+
+
