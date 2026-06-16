@@ -131,6 +131,10 @@ while rodando :
             pontos = 0
             inimigo.voltar()
             amigo.voltar()
+        
+        for x in lista_de_eventos:
+            if x.type == pygame.KEYDOWN and x.key == pygame.K_v:
+                vidas += 1
 
     if status_jogo == "FASE":
         tela.blit(fase,(0,0))
@@ -188,6 +192,10 @@ while rodando :
 
         if pontos == 50 : 
             status_jogo = "GANHOU"
+
+        for x in lista_de_eventos:
+            if x.type == pygame.KEYDOWN and x.key == pygame.K_v:
+                vidas += 1
     
     if status_jogo == "PERDEU":
 
