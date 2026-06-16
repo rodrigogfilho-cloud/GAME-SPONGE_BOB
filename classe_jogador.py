@@ -33,15 +33,17 @@ class Jogador:
             if self.contador == len(self.lista_sprite):
                 self.contador = 0
             self.sprite = self.lista_sprite[self.contador]
+
             if tecla_pressionada[pygame.K_RIGHT] or tecla_pressionada[pygame.K_d]:
                 if self.pos_x < 900 - self.imagem.get_width():    
-                    self.pos_x += 5.5
+                    self.pos_x += 5
                     self.imagem = self.sprite
+
             if tecla_pressionada[pygame.K_LEFT] or tecla_pressionada[pygame.K_a]:
                 if self.pos_x > 0 :
-                    self.pos_x -= 5.5
-                    
+                    self.pos_x -= 5
                     self.imagem = pygame.transform.flip(self.sprite,True,False)
+
             if tecla_pressionada[pygame.K_LEFT] and tecla_pressionada[pygame.K_RIGHT] or tecla_pressionada[pygame.K_a] and tecla_pressionada[pygame.K_d] or tecla_pressionada[pygame.K_LEFT] and tecla_pressionada[pygame.K_d] or tecla_pressionada[pygame.K_a] and tecla_pressionada[pygame.K_RIGHT]:
                 self.imagem = self.parado
             

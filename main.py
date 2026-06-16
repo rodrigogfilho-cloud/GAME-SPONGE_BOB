@@ -128,7 +128,7 @@ while rodando :
     if status_jogo == "PERDEU":
 
         tela.blit(derrota,(0,0))
-        tela.blit(textinho_perdeu,(200,200))
+        tela.blit(textinho_perdeu,(200,570))
         if tecla_pressionada[pygame.K_SPACE] or tecla_pressionada[pygame.K_RETURN]:
 
             for inimigo in inimigos:
