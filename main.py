@@ -46,13 +46,16 @@ derrota = pygame.transform.scale(derrota,(x,y))
 vitoria = pygame.image.load(resource_path("src/img/vitoria.png"))
 vitoria = pygame.transform.scale(vitoria,(x,y))
 rodando = True
+poder_ativo = True
 pontos = 0
 vidas = 5
 
 sponge_bob = Jogador()
 fonte_texto = pygame.font.SysFont("Arial",28,True)
+fonte_texto2 = pygame.font.SysFont("Arial", 38,True)
 contador_poder = 3
 status_jogo = "INICIO"
+tempo_inicio_poder = 0
 
 
 
@@ -81,6 +84,7 @@ while rodando :
         tela.blit(textos_mortes,(775, 20))
         textos_limite = fonte_texto.render(f' CRÉDITOS DE PODER : {contador_poder} ', False,(255,255,255),(0,0,0))
         tela.blit(textos_limite,(310,20))
+        textinho_perdeu = fonte_texto2.render(f' VOCÊ PERDEU COM {pontos} PONTOS ', False, (255,255,255),(0,0,0,))
 
         #BOB ESPONJA ANDANDO
 
@@ -103,18 +107,18 @@ while rodando :
                 amigo.voltar()
                 pontos += 1
 
-        if tecla_pressionada[pygame.K_SPACE]:
-            contador_poder -= 1
-            for inimigo in inimigos:
-                inimigo.pos_y = -2500
+        
+        for x in lista_de_eventos:
+            if x.type == pygame.KEYDOWN and x.key == pygame.K_SPACE:
+                contador_poder -= 1
+                for inimigo in inimigos:
+                    inimigo.pos_y = -2500       #inutilizar a tecla de espaço
+                if contador_poder == 0:
+                    inimigo.pos_y = inimigo.pos_y
+
+        if contador_poder <= 0 and tecla_pressionada[pygame.K_SPACE]:
+            contador_poder = 0
             
-            
-
-        if contador_poder == 0:
-            print("SEU PODER NAO FUNCIONA")
-
-                
-
         if vidas == 0:
             status_jogo = "PERDEU"
 
@@ -124,7 +128,8 @@ while rodando :
     if status_jogo == "PERDEU":
 
         tela.blit(derrota,(0,0))
-        if tecla_pressionada[pygame.K_SPACE]:
+        tela.blit(textinho_perdeu,(200,200))
+        if tecla_pressionada[pygame.K_SPACE] or tecla_pressionada[pygame.K_RETURN]:
 
             for inimigo in inimigos:
                 inimigo.voltar()
