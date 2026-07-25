@@ -24,6 +24,9 @@ class Jogador:
         self.sprite = self.lista_sprite[self.contador]
         self.mascara = pygame.mask.from_surface(self.sprite)
         self.imagem = self.sprite
+
+        self.som = pygame.mixer.Sound(resource_path("src/song/item_bom.mp3"))
+        self.som2 = pygame.mixer.Sound(resource_path("src/song/item_ruim.mp3"))
         
 
     def andar (self,tecla_pressionada):
@@ -55,5 +58,15 @@ class Jogador:
     
     def exibir (self,tela_do_jogo):
         tela_do_jogo.blit(self.imagem,(self.pos_x,self.pos_y))
+
+    def soung (self):
+        self.som.play()
+    def soung2 (self):
+        self.som2.play()
+    def soung3 (self):
+        self.som.stop()
+    def soung4 (self):
+        self.som2.stop()
+
 
         

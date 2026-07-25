@@ -3,6 +3,7 @@ from caminho_relativo import resource_path
 from classe_jogador import Jogador
 from classe_ruim import Ruim
 from classe_bom import Bom
+
 import time
 
 pygame.init()
@@ -53,6 +54,10 @@ rodando = True
 poder_ativo = True
 pontos = 0
 vidas = 5
+som_de_inicio = pygame.mixer.Sound(resource_path("src/song/tela_de_começo.mp3"))
+som_de_jogo = pygame.mixer.Sound(resource_path("src/song/partida[.mp3"))
+som_de_derrota = pygame.mixer.Sound(resource_path("src/song/perdeu.mp3"))
+
 
 sponge_bob = Jogador()
 fonte_texto = pygame.font.SysFont("Arial",28,True)
@@ -61,7 +66,9 @@ contador_poder = 3
 status_jogo = "INICIO"
 tempo_inicio_poder = 0
 
-
+intro_tocou = False
+partida = False
+derrota_sound = False
 
 while rodando :
     lista_de_eventos = pygame.event.get()
@@ -72,11 +79,20 @@ while rodando :
     tecla_pressionada = pygame.key.get_pressed()
 
     if status_jogo == "INICIO":
+        if not intro_tocou:
+
+
+            som_de_inicio.play()
+            intro_tocou = True
         tela.blit(inicio,(0,0))
         if tecla_pressionada[pygame.K_RETURN] or tecla_pressionada[pygame.K_KP_ENTER]:
             status_jogo = "PLAY"
+            som_de_inicio.stop()
 
     if status_jogo == "PLAY":
+        if not partida:
+            som_de_jogo.play()
+            partida = True
 
         
         tela.blit(fundo,(0,0))
@@ -102,6 +118,8 @@ while rodando :
             if inimigo.mascara.overlap(sponge_bob.mascara,(sponge_bob.pos_x - inimigo.pos_x , sponge_bob.pos_y - inimigo.pos_y )):
                 inimigo.voltar()
                 vidas -= 1
+                sponge_bob.soung2()
+
 
         for amigo in bens:
             amigo.exibir(tela)
@@ -110,6 +128,8 @@ while rodando :
             if amigo.mascara.overlap(sponge_bob.mascara,(sponge_bob.pos_x - amigo.x , sponge_bob.pos_y - amigo.y )):
                 amigo.voltar()
                 pontos += 1
+                sponge_bob.soung()
+
 
         
         for x in lista_de_eventos:
@@ -125,79 +145,24 @@ while rodando :
             
         if vidas == 0:
             status_jogo = "PERDEU"
+            sponge_bob.soung3()
+            sponge_bob.soung4()
+            som_de_jogo.stop()
 
         if pontos == 20 : 
-            status_jogo = "FASE"
+            status_jogo = "GANHOU"
             pontos = 0
             inimigo.voltar()
             amigo.voltar()
+            sponge_bob.soung3()
+            sponge_bob.soung4()
+            som_de_jogo.stop()
         
-        for x in lista_de_eventos:
-            if x.type == pygame.KEYDOWN and x.key == pygame.K_v:
-                vidas += 1
-
-    if status_jogo == "FASE":
-        tela.blit(fase,(0,0))
-        if tecla_pressionada[pygame.K_RETURN] or tecla_pressionada[pygame.K_KP_ENTER]:
-            status_jogo = "PLAY2"
-
-    if status_jogo == "PLAY2":
-
-        tela.blit(fundo2,(0,0))
-
-        #PONTUAÇÃO JOGO
-        textos_pontos = fonte_texto.render(f' PONTOS: {pontos} ', False,(255,255,255),(0,0,0))
-        tela.blit(textos_pontos,(15, 20))
-        textos_mortes = fonte_texto.render(f' VIDAS: {vidas} ', False,(255,255,255),(0,0,0))
-        tela.blit(textos_mortes,(775, 20))
-        textos_limite = fonte_texto.render(f' CRÉDITOS DE PODER : {contador_poder} ', False,(255,255,255),(0,0,0))
-        tela.blit(textos_limite,(310,20))
-        textinho_perdeu = fonte_texto2.render(f' VOCÊ PERDEU COM {pontos} PONTOS ', False, (255,255,255),(0,0,0,))
-
-        #BOB ESPONJA ANDANDO
-
-        sponge_bob.exibir(tela)
-        sponge_bob.andar(tecla_pressionada)
-
-        for inimigo in inimigos:
-            inimigo.exibir(tela)
-            inimigo.andar()
-
-            if inimigo.mascara.overlap(sponge_bob.mascara,(sponge_bob.pos_x - inimigo.pos_x , sponge_bob.pos_y - inimigo.pos_y )):
-                inimigo.voltar()
-                vidas -= 1
-
-        for amigo in bens:
-            amigo.exibir(tela)
-            amigo.andar()
-
-            if amigo.mascara.overlap(sponge_bob.mascara,(sponge_bob.pos_x - amigo.x , sponge_bob.pos_y - amigo.y )):
-                amigo.voltar()
-                pontos += 1
-
-        
-        for x in lista_de_eventos:
-            if x.type == pygame.KEYDOWN and x.key == pygame.K_SPACE:
-                contador_poder -= 1
-                for inimigo in inimigos:
-                    inimigo.pos_y = -2500       #inutilizar a tecla de espaço
-                if contador_poder == 0:
-                    inimigo.pos_y = inimigo.pos_y
-
-        if contador_poder <= 0 and tecla_pressionada[pygame.K_SPACE]:
-            contador_poder = 0
-            
-        if vidas == 0:
-            status_jogo = "PERDEU"
-
-        if pontos == 50 : 
-            status_jogo = "GANHOU"
-
-        for x in lista_de_eventos:
-            if x.type == pygame.KEYDOWN and x.key == pygame.K_v:
-                vidas += 1
     
     if status_jogo == "PERDEU":
+        if not derrota_sound:
+            som_de_derrota.play()
+            derrota_sound = True
 
         tela.blit(derrota,(0,0))
         tela.blit(textinho_perdeu,(200,570))
@@ -212,7 +177,13 @@ while rodando :
             pontos = 0 
             status_jogo = "PLAY"
 
+            som_de_derrota.stop()
+
     if status_jogo == "GANHOU":
+        if not partida:
+            som_de_inicio.play()
+            partida = True
+        
 
         tela.blit(vitoria,(0,0))
         if tecla_pressionada[pygame.K_RETURN] or tecla_pressionada[pygame.K_KP_ENTER]:
@@ -225,6 +196,7 @@ while rodando :
             vidas = 5
             pontos = 0 
             status_jogo = "PLAY"
+            som_de_inicio.stop()
     if tecla_pressionada[pygame.K_ESCAPE]:
         rodando = False
 
