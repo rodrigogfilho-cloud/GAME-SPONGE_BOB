@@ -133,13 +133,12 @@ while rodando :
 
         
         for x in lista_de_eventos:
-            if x.type == pygame.KEYDOWN and x.key == pygame.K_SPACE:
-                contador_poder -= 1
-                for inimigo in inimigos:
-                    inimigo.pos_y = -2500       #inutilizar a tecla de espaço
-                if contador_poder == 0:
-                    inimigo.pos_y = inimigo.pos_y
-
+            if contador_poder > 0:    
+                if x.type == pygame.KEYDOWN and x.key == pygame.K_SPACE:
+                    contador_poder -= 1
+                    for inimigo in inimigos:
+                        inimigo.pos_y = -2500       #inutilizar a tecla de espaço
+                    
         if contador_poder <= 0 and tecla_pressionada[pygame.K_SPACE]:
             contador_poder = 0
             
